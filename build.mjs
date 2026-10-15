@@ -10,7 +10,7 @@
 //   SITE_SLUG     the CRM website whose enquiry form is used, default kestrel-demo
 import { cpSync, mkdirSync, rmSync, writeFileSync } from 'node:fs';
 
-const DEFAULT_TRACK_KEY = '';
+const DEFAULT_TRACK_KEY = 'as_189e4f1d741b98fe79c7aa33';
 
 rmSync('dist', { recursive: true, force: true });
 mkdirSync('dist', { recursive: true });
