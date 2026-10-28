@@ -1,0 +1,53 @@
+/* Motion layer (shared). Everything here is inert until motion.js has added
+   .mo to <html>, which it never does with prefers-reduced-motion: reduce. */
+.mo-w { display: inline-block; clip-path: inset(-0.4em -0.5em -0.2em -0.5em); }
+.mo-wi { display: inline-block; will-change: translate; }
+.mo-wdone .mo-w { clip-path: none; }
+.mo-wdone .mo-wi { will-change: auto; }
+.mo-deco { pointer-events: none; }
+@media (prefers-reduced-motion: reduce) {
+  .mo-deco *, .mo-deco { animation: none !important; }
+}
+
+/* ── Kestrel ── */
+:root { --mo-ease: cubic-bezier(.16, 1, .3, 1); }
+/* The needle is driven by motion.js (a spring); the CSS sweep steps aside. */
+html.mo .g-needle { animation: none; }
+.mo-ok-glow { fill: none; stroke: #22A55A; stroke-width: 26; opacity: 0; filter: blur(6px); }
+.gauge-wrap { position: relative; }
+.mo-burner { position: absolute; top: 16px; right: 16px; width: 52px; height: 52px; border-radius: 50%; background: radial-gradient(circle at 50% 60%, #22313F, #121B24); box-shadow: inset 0 0 0 2px #33475A, 0 8px 18px -8px rgba(0, 0, 0, .6); display: grid; place-items: center; }
+.mo-burner svg { width: 40px; height: 40px; overflow: visible; }
+.mo-fl { transform-box: fill-box; transform-origin: 50% 100%; }
+@media (max-width: 720px) { .mo-burner { top: 12px; right: 12px; width: 44px; height: 44px; } .mo-burner svg { width: 34px; height: 34px; } }
+
+/* The copper pipe along the top of the checks section. */
+.checks { position: relative; }
+html.mo .checks, html.mo-reduce .checks, html.mo-off .checks { padding-top: clamp(92px, 10vw, 120px); }
+.mo-pipe { position: absolute; left: 0; right: 0; top: 0; height: 88px; overflow: hidden; pointer-events: none; }
+.mo-pipe svg { display: block; }
+.mo-water { transition: stroke-dashoffset .12s linear; }
+
+/* Price rows: a quiet highlight that slides in, the price nudges over. */
+html.mo .pt-row:not(.pt-head) { position: relative; isolation: isolate; }
+html.mo .pt-row:not(.pt-head)::before { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, #FFF1E8, rgba(255, 241, 232, 0)); scale: 0 1; transform-origin: left; transition: scale .5s var(--mo-ease); }
+html.mo .pt-row:not(.pt-head):hover::before { scale: 1 1; }
+html.mo .pt-price { transition: color .3s, translate .4s var(--mo-ease); }
+html.mo .pt-row:hover .pt-price { color: var(--orange); translate: -4px 0; }
+
+/* Postcodes, reviews, team: small lifts. */
+html.mo .postcodes li { transition: translate .45s var(--mo-ease), box-shadow .3s; }
+html.mo .postcodes li:hover { translate: 0 -3px; box-shadow: inset 4px 0 0 var(--orange), 0 14px 26px -20px rgba(22, 32, 42, .45); }
+html.mo .review { position: relative; isolation: isolate; transition: translate .5s var(--mo-ease), box-shadow .3s; }
+html.mo .review::after { content: ''; position: absolute; inset: 0; z-index: -1; border-radius: inherit; pointer-events: none; opacity: 0; transition: opacity .35s;
+  background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 0%), rgba(240, 106, 34, .12), transparent 70%); }
+html.mo .review:hover { translate: 0 -4px; box-shadow: 0 24px 40px -30px rgba(22, 32, 42, .5); }
+html.mo .review:hover::after { opacity: 1; }
+html.mo .team li { transition: translate .45s var(--mo-ease), border-color .3s; }
+html.mo .team li:hover { translate: 6px 0; border-color: var(--orange); }
+
+/* Orange buttons: the arrow of light. */
+html.mo .btn-orange { position: relative; overflow: hidden; isolation: isolate; }
+html.mo .btn-orange::after { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(105deg, transparent 30%, rgba(255, 255, 255, .25) 50%, transparent 70%); translate: -110% 0; transition: translate .7s var(--mo-ease); }
+html.mo .btn-orange:hover::after { translate: 110% 0; }
+html.mo .nav nav a { background: linear-gradient(var(--orange-hot), var(--orange-hot)) 0 100% / 0 2px no-repeat; transition: background-size .35s var(--mo-ease), color .2s; padding-bottom: 3px; }
+html.mo .nav nav a:hover { background-size: 100% 2px; }
